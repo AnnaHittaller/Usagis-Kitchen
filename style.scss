@@ -12,14 +12,15 @@ body {
 	background: pink url("https://wallpapercave.com/wp/wp7233398.jpg") no-repeat
 		center;
 	background-size: cover;
-	height: 100vh;
+	min-height: 100vh; //height: 100vh;
 	color: black;
 	font-family: "Press Start 2P", cursive;
 	display: flex;
 	align-items: center;
+	padding: 5% 0;
 	.wrapper {
 		width: 80%;
-		height: 80%;
+		//height: 90vh;
 		margin: auto;
 		background: white;
 		@include pixel-borders(
@@ -95,25 +96,32 @@ body {
 				}
 			}
 		}
-		// .pixel {
-		// 	content: "";
-		// 	display: inline-block;
-		// 	background-color: black;
-		// 	width: 15px;
-		// 	height: 15px;
-		// 	margin-top: 2rem;
-		// }
+
+		.waiting {
+		margin: 0;
+		padding: 0;
+		height: 0;
+		position: relative;
+		top: 4rem;
+		z-index: 2;
+		margin-bottom:-1.5rem;
+			.pixel {
+				content: "";
+				display: inline-block;
+				background-color: black;
+				width: 15px;
+				height: 15px;
+			}
+		}
+
 		.tips {
 			display: flex;
 			flex-direction: column;
 			justify-self: flex-start;
-			min-height: 200px;
+			min-height: 170px;
 			padding-top: 1rem;
-			// gap: 2rem;
 			justify-content: flex-start;
 			max-width: 90%;
-			// margin-top: auto;
-			// margin-bottom: 3rem;
 			opacity: 0;
 			&.visible {
 				opacity: 1;
@@ -233,9 +241,11 @@ body {
 					font-size: 0.8rem;
 				}
 			}
-			.pixel {
-				width: 10px;
-				height: 10px;
+			.waiting {
+				.pixel {
+					width: 10px;
+					height: 10px;
+				}
 			}
 			.tips {
 				p {

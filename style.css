@@ -404,15 +404,15 @@
 body {
   background: pink url("https://wallpapercave.com/wp/wp7233398.jpg") no-repeat center;
   background-size: cover;
-  height: 100vh;
+  min-height: 100vh;
   color: black;
   font-family: "Press Start 2P", cursive;
   display: flex;
   align-items: center;
+  padding: 5% 0;
 }
 body .wrapper {
   width: 80%;
-  height: 80%;
   margin: auto;
   background: white;
   border-style: solid;
@@ -528,11 +528,27 @@ body .wrapper .button #button::after {
 body .wrapper .button #button:hover {
   box-shadow: 0 0 10px 3px pink;
 }
+body .wrapper .waiting {
+  margin: 0;
+  padding: 0;
+  height: 0;
+  position: relative;
+  top: 4rem;
+  z-index: 2;
+  margin-bottom: -1.5rem;
+}
+body .wrapper .waiting .pixel {
+  content: "";
+  display: inline-block;
+  background-color: black;
+  width: 15px;
+  height: 15px;
+}
 body .wrapper .tips {
   display: flex;
   flex-direction: column;
   justify-self: flex-start;
-  min-height: 200px;
+  min-height: 170px;
   padding-top: 1rem;
   justify-content: flex-start;
   max-width: 90%;
@@ -675,7 +691,7 @@ body .wrapper .tips :nth-child(4) {
   body .wrapper .button #button {
     font-size: 0.8rem;
   }
-  body .wrapper .pixel {
+  body .wrapper .waiting .pixel {
     width: 10px;
     height: 10px;
   }

@@ -83,42 +83,13 @@ const categoryFilter = document.getElementById("cat-list");
 const ingredientFilter = document.getElementById("ingr-list");
 const mainParagraph = document.getElementById("main-p");
 const dessertParagraph = document.getElementById("dessert-p");
+const pixels = document.querySelector(".waiting");
+//mainParagraph.innerHTML = pixels;
 
 button.onclick = () => {
+	pixels.style.display = 'none';
 
-	// const datalistCat = document.querySelectorAll("#categories option")
-	// let categoryValues = []
-	// for(let i of datalistCat) {
-	// 	categoryValues.push(i.value)
-	// }
-
-	// const datalistIngr = document.querySelectorAll("#ingredients option");
-	// let ingredientValues = []
-	// for(let i of datalistIngr) {
-	// 	ingredientValues.push(i.value)
-	// }
-
-	// console.log(ingredientValues)
-	// console.log(categoryValues)
-	// console.log(categoryFilter.value);
-
-	// if (categoryValues.indexOf(categoryFilter.value) === -1) {
-	// 	mainParagraph.style.display = "block";
-	// 	mainParagraph.innerHTML = "There is no such category";
-	// } else {
-	// 	return
-	// }
-
-	// for (let i of categoryValues) {
-	// 	if(i !== categoryFilter.value) {
-	// 		mainParagraph.style.display = "block";
-	// 		mainParagraph.innerHTML = "There is no such category"
-	// 	}
-	// }
-
-
-
-	// no categoriy or filter is given: gives randomized results
+	// no category or filter is given: gives randomized results
 	if (!categoryFilter.value && !ingredientFilter.value) {
 		mainParagraph.style.display = "block";
 		dessertParagraph.style.display = "block";
@@ -126,98 +97,137 @@ button.onclick = () => {
 			dishes[Math.floor(Math.random() * dishes.length)].title;
 		document.getElementById("dessert").innerHTML =
 			desserts[Math.floor(Math.random() * desserts.length)].title;
-		// only ingredient is given: gives filtered result for both main course and dessert
+
+	// only ingredient is given: gives filtered result for both main course and dessert
 	} else if (!categoryFilter.value && ingredientFilter.value) {
-		mainParagraph.style.display = "block";
-		dessertParagraph.style.display = "block";
-		const filteredMainArr = dishes.filter(
-			(dish) => dish.ingr.indexOf(ingredientFilter.value) !== -1
-		);
-		if (filteredMainArr.length > 0) {
-			document.getElementById("main-course").innerHTML =
-				filteredMainArr[
-					Math.floor(Math.random() * filteredMainArr.length)
-				].title;
+
+		if (!ingredients.includes(ingredientFilter.value)) {
+			dessertParagraph.style.display = "none";
+			mainParagraph.style.display = "block";
+			mainParagraph.innerHTML =
+				"Please choose an existing category or ingredient.";
+			
 		} else {
-			mainParagraph.innerHTML = "There's no main course with this ingredient.";
+			mainParagraph.style.display = "block";
+			dessertParagraph.style.display = "block";
+			const filteredMainArr = dishes.filter(
+				(dish) => dish.ingr.indexOf(ingredientFilter.value) !== -1
+			);
+			if (filteredMainArr.length > 0) {
+				document.getElementById("main-course").innerHTML =
+					filteredMainArr[
+						Math.floor(Math.random() * filteredMainArr.length)
+					].title;
+			} else {
+				mainParagraph.innerHTML = "There's no main course with this ingredient.";
+			}
+	
+			const filteredDessertArr = desserts.filter(
+				(dessert) => dessert.ingr.indexOf(ingredientFilter.value) !== -1
+			);
+			if (filteredDessertArr.length > 0) {
+				document.getElementById("dessert").innerHTML =
+					filteredDessertArr[Math.floor(Math.random() * filteredDessertArr.length)].title;
+			} else {
+				dessertParagraph.innerHTML =
+					"This is an unacceptable ingredient for desserts.";
+			}
+
 		}
 
-		const filteredDessertArr = desserts.filter(
-			(dessert) => dessert.ingr.indexOf(ingredientFilter.value) !== -1
-		);
-		if (filteredDessertArr.length > 0) {
-			document.getElementById("dessert").innerHTML =
-				filteredDessertArr[Math.floor(Math.random() * filteredDessertArr.length)].title;
-		} else {
-			dessertParagraph.innerHTML =
-				"This is an unacceptable ingredient for desserts.";
-		}
-		// dessert category is given without ingredients: gives randomized dessert result, main course remains hidden
+	// dessert category is given without ingredients: gives randomized dessert result, main course remains hidden
 	} else if (categoryFilter.value === "dessert" && !ingredientFilter.value) {
 		mainParagraph.style.display = "none";
 		document.getElementById("dessert").innerHTML =
 			desserts[Math.floor(Math.random() * desserts.length)].title;
-		// dessert category and ingredient is both given: gives filtered dessert results, main course remains hidden
+
+	// dessert category and ingredient is both given: gives filtered dessert results, main course remains hidden
 	} else if (categoryFilter.value === "dessert" && ingredientFilter.value) {
-		mainParagraph.style.display = "none";
-		dessertParagraph.style.display = "block";
-		const filteredDessertArray = desserts.filter(
-			(dessert) => dessert.ingr.indexOf(ingredientFilter.value) !== -1
-		);
-		if (filteredDessertArray.length > 0) {
-			document.getElementById("dessert").innerHTML =
-				filteredDessertArray[
-					Math.floor(Math.random() * filteredDessertArray.length)
-				].title;
-		} else {
-			dessertParagraph.innerHTML =
-				"Are you sure? Go and eat an ice cream instead.";
-		}
-		// category is not dessert, ingredient is not given: gives randomized results for main course, dessert remains hidden
-	} else if (categoryFilter.value !== "dessert" && !ingredientFilter.value) {
-		dessertParagraph.style.display = "none";
-		mainParagraph.style.display = "block";
 
-		
-		const filteredMainArray = dishes.filter(
-		(dish) => dish.category === categoryFilter.value
-		);
-
-		// for (let i in filteredMainArray) {
- 		// console.log(filteredMainArray[i].category)
-		// 	if (filteredMainArray[i].category !== categoryFilter.value) {
-		// 		mainParagraph.innerHTML = "There is no such category";
-		// 	} else {
-		// 	document.getElementById("main-course").innerHTML =
-		// 	filteredMainArray[Math.floor(Math.random() * filteredMainArray.length)].title;
-		// 	}
-		// }
-		document.getElementById("main-course").innerHTML =
-			filteredMainArray[
-				Math.floor(Math.random() * filteredMainArray.length)
-			].title;
-		// category is not dessert, and ingredient is also given: gives filtered result, dessert remains hidden
-	} else if (categoryFilter.value !== "dessert" && ingredientFilter.value) {
-		dessertParagraph.style.display = "none";
-		mainParagraph.style.display = "block";
-
-		const filteredMainArray2 = dishes.filter(
-			(dish) => dish.category === categoryFilter.value
-		);
-		const filteredMainArray3 = filteredMainArray2.filter(
-			(dish) => dish.ingr.indexOf(ingredientFilter.value) !== -1
-		);
-
-		if (filteredMainArray3.length > 0) {
-			document.getElementById("main-course").innerHTML =
-				filteredMainArray3[
-					Math.floor(Math.random() * filteredMainArray3.length)
-				].title;
-		} else {
+		if (!ingredients.includes(ingredientFilter.value)) {
+			dessertParagraph.style.display = "none";
+			mainParagraph.style.display = "block";
 			mainParagraph.innerHTML =
-				"Sorry, I don`t have any idea. Just order a pizza.";
+				"Please choose an existing category or ingredient.";
+		} else {
+			mainParagraph.style.display = "none";
+			dessertParagraph.style.display = "block";
+			const filteredDessertArray = desserts.filter(
+				(dessert) => dessert.ingr.indexOf(ingredientFilter.value) !== -1
+			);
+			if (filteredDessertArray.length > 0) {
+				document.getElementById("dessert").innerHTML =
+					filteredDessertArray[
+						Math.floor(Math.random() * filteredDessertArray.length)
+					].title;
+			} else {
+				dessertParagraph.innerHTML =
+					"Are you sure? Go and eat an ice cream instead.";
+			}
+
 		}
+		
+
+	// category is not dessert, ingredient is not given: gives randomized results for main course, dessert remains hidden
+	} else if (categoryFilter.value !== "dessert" && !ingredientFilter.value) {
+
+		if (!categories.includes(categoryFilter.value)) {
+			dessertParagraph.style.display = "none";
+			mainParagraph.style.display = "block";
+			mainParagraph.innerHTML =
+				"Please choose an existing category or ingredient.";
+		} else {
+			dessertParagraph.style.display = "none";
+			mainParagraph.style.display = "block";
+			
+			const filteredMainArray = dishes.filter(
+			(dish) => dish.category === categoryFilter.value
+			);
+	
+			document.getElementById("main-course").innerHTML =
+				filteredMainArray[
+					Math.floor(Math.random() * filteredMainArray.length)
+				].title;
+
+		} 
+		
+
+
+	// category is not dessert, and ingredient is also given: gives filtered result, dessert remains hidden
+	} else if (categoryFilter.value !== "dessert" && ingredientFilter.value) {
+
+		if (
+			!ingredients.includes(ingredientFilter.value) ||
+			!categories.includes(categoryFilter.value)
+		) {
+			dessertParagraph.style.display = "none";
+			mainParagraph.style.display = "block";
+			mainParagraph.innerHTML =
+				"Please choose an existing category or ingredient.";
+		} else {
+			dessertParagraph.style.display = "none";
+			mainParagraph.style.display = "block";
+
+			const filteredMainArray2 = dishes.filter(
+				(dish) => dish.category === categoryFilter.value
+			);
+			const filteredMainArray3 = filteredMainArray2.filter(
+				(dish) => dish.ingr.indexOf(ingredientFilter.value) !== -1
+			);
+
+			if (filteredMainArray3.length > 0) {
+				document.getElementById("main-course").innerHTML =
+					filteredMainArray3[
+						Math.floor(Math.random() * filteredMainArray3.length)
+					].title;
+			} else {
+				mainParagraph.innerHTML =
+					"Sorry, I don`t have any idea. Just order a pizza.";
+			}
+		} 
+		
 	}
+
 	//randomized results for bunny's face, food icons and cleaning tips
 	document.getElementById("cleaning").innerHTML =
 		reminder[Math.floor(Math.random() * reminder.length)];
@@ -225,7 +235,7 @@ button.onclick = () => {
 		faces[Math.floor(Math.random() * faces.length)];
 	document.querySelector(".foodicon").innerHTML =
 		foodIcons[Math.floor(Math.random() * foodIcons.length)];
-	// document.querySelector(".waiting").classList.add("hidden");
+	 //.classList.add("hidden");
 	// visual changes at the tips section and at the button
 	document.querySelector(".tips").classList.add("visible");
 	button.style.color = "#8C64DA";
