@@ -1,6 +1,6 @@
 @import "node_modules/pixel-borders/src/styles/pixel-borders.scss";
 
-$small-font: 0.75rem;
+//$small-font: 0.75rem; - have to add new variables for font sizes
 
 * {
 	padding: 0;
@@ -45,23 +45,23 @@ body {
 				family: "Open Sans", sans-serif;
 				size: 2rem;
 				weight: bold;
-			} 
+			}
 			line-height: 1.2;
 			margin-bottom: 1.5rem;
 		}
 		#refresh {
 			font-size: 1.25rem;
-			color:#8c64da;
-			padding: .75rem;
+			color: #8c64da;
+			padding: 0.75rem;
 			margin-bottom: 1rem;
 			background-color: transparent;
 			cursor: pointer;
 			transition: background-color 0.1s ease, box-shadow 0.1s linear;
 			@include pixel-borders(
-			$corner-size: 2,
-			$border-size: 3px,
-			$border-color: black,
-			$border-inset-color: pink
+				$corner-size: 2,
+				$border-size: 3px,
+				$border-color: black,
+				$border-inset-color: pink
 			);
 			&:hover {
 				box-shadow: 0 0 10px 3px pink;
@@ -98,13 +98,13 @@ body {
 		}
 
 		.waiting {
-		margin: 0;
-		padding: 0;
-		height: 0;
-		position: relative;
-		top: 4rem;
-		z-index: 2;
-		margin-bottom:-1.5rem;
+			margin: 0;
+			padding: 0;
+			height: 0;
+			position: relative;
+			top: 4rem;
+			z-index: 2;
+			margin-bottom: -1.5rem;
 			.pixel {
 				content: "";
 				display: inline-block;
@@ -139,8 +139,6 @@ body {
 	}
 }
 
-
-
 .filter {
 	display: flex;
 	flex-wrap: wrap;
@@ -153,7 +151,7 @@ body {
 		font-family: "Press Start 2P", cursive;
 		padding: 0.5rem;
 		border-radius: 5px;
-        outline: none;
+		outline: none;
 		text-align: center;
 		@include pixel-borders(
 			$corner-size: 2,
@@ -218,7 +216,6 @@ body {
 	display: none;
 	margin: 0;
 	padding: 0;
-
 }
 
 /* ------------ media queries ---------*/
@@ -299,16 +296,15 @@ body {
 	}
 
 	.filter {
-
-	#ingr-list,
-	#cat-list {
-		width: 100%;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-	::placeholder {
-		font-size: .75rem;
-	}
+		#ingr-list,
+		#cat-list {
+			width: 100%;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		::placeholder {
+			font-size: 0.75rem;
+		}
 	}
 }
